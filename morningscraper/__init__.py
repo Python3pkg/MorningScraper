@@ -11,8 +11,9 @@ if sys.version_info[0] == 3:
     from urllib.request import urlopen
     from urllib.parse import quote, urlsplit
 elif sys.version_info[0] == 2:
-    from urllib import urlopen, quote
-    from urlparse import urlsplit
+    from urllib.request import urlopen
+    from urllib.parse import quote
+    from urllib.parse import urlsplit
 else:
     raise Exception('Python version 2 or 3 required')
 
@@ -74,7 +75,7 @@ def search(ref, verbose=False):
     '''
 
     if verbose:
-        print('Search for: %s' % ref)
+        print(('Search for: %s' % ref))
     data = urlopen(SEARCH_BASE % quote(ref)).read()
     parsed_html = BeautifulSoup(data)
     results = []
@@ -109,9 +110,9 @@ def search(ref, verbose=False):
 
     if verbose:
         if results:
-            print('%s item(s) found.' % len(results))
+            print(('%s item(s) found.' % len(results)))
             for item in results:
-                print('\t%s\t%s' % (item['type'], item['name']))
+                print(('\t%s\t%s' % (item['type'], item['name'])))
         else:
             print('No items found.')
     return results
@@ -176,7 +177,7 @@ def get_url(url, verbose=False):
                 }
     '''
     if verbose:
-        print('\nOpening %s' % url)
+        print(('\nOpening %s' % url))
     if not urlsplit(url).netloc.endswith(SITE):
         raise Exception('Non morningstar.co.uk url %r' % url)
     result = None
